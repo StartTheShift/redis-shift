@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+USER="redis"
+
+chown $USER:$USER /var/lib/redis
+mkdir -p /mnt/redis
+chown -R $USER:$USER /mnt/redis/
+
+#DEBHELPER#
