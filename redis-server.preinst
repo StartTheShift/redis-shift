@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+USER="redis"
+HOME="/var/lib/redis"
+
+
+if ! getent group $USER >/dev/null
+then
+	addgroup --system $USER >/dev/null
+fi
+
+# creating user if it isn't already there
+if ! getent passwd $USER >/dev/null
+then
+        adduser \
+          --system \
+          --disabled-login \
+          --ingroup $USER \
+          --home $HOME \
+          --gecos "redis server" \
+          --shell /bin/false \
+          $USER  >/dev/null
+fi
+
+mkdir -p /etc/redis/conf.d/ && touch /etc/redis/conf.d/local.conf
+
+#DEBHELPER#
